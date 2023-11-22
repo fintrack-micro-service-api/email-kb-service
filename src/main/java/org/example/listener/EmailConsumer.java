@@ -16,6 +16,7 @@ import org.example.model.dto.ScheduleDto;
 import org.example.model.dto.UserDtoClient;
 import org.example.model.response.ApiResponse;
 import org.example.service.EmailKbService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class EmailConsumer {
     private static final Logger LOGGER = LogManager.getLogger(EmailConsumer.class);
     private final EmailKbService emailKbService;
     private final WebClient.Builder webClient;
-    private static final String EMAIL_TOPIC_SCHEDULE = "send.email.kb.schedule";
+    private final static String EMAIL_TOPIC_SCHEDULE = "kb-email-notification-schedule";
 
 
     public EmailConsumer(EmailKbService emailKbService, WebClient.Builder webClient) {
