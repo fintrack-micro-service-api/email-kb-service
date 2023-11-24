@@ -54,3 +54,10 @@ Base:
 smtp:
   username: soccerdatehrd@gmail.com
   password: tmkylzbkhzsautkz
+
+springdoc:
+  swagger-ui:
+    oauth:
+      clientId: fintrack-app
+      clientSecret: yc3N92U7MgQtyfZ4le3h5ZeF0HTfuqgn
+      realm: Fintrack
