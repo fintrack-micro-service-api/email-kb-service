@@ -6,8 +6,8 @@ pipeline {
     }
     environment {
         DOCKER_REGISTRY = 'kimheang68'
-        IMAGE_NAME = 'fintrack-email-service'
-        CONTAINER_NAME = 'fintrack-email-service-container'
+        IMAGE_NAME = 'fintrack-email-kb-service'
+        CONTAINER_NAME = 'fintrack-email-kb-service-container'
         TELEGRAM_BOT_TOKEN = credentials('telegram-token')
         TELEGRAM_CHAT_ID = credentials('chat-id')
         BUILD_INFO = "${currentBuild.number}"
