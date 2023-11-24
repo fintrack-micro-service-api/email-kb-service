@@ -42,7 +42,7 @@ public class EmailConsumer {
 
     public UserDtoClient getCustomerId(UUID customerId) {
         return webClient.build().get()
-                .uri("http://localhost:8088/api/v1/customers/{customerId}", customerId)
+                .uri("https://api-fintrack.kbaenak.tech/api/v1/customers/{customerId}", customerId)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<UserDtoClient>>() {})
                 .block()
@@ -51,7 +51,7 @@ public class EmailConsumer {
 
     public List<UserDtoClient> getAllCustomers() {
         ApiResponse<List<UserDtoClient>> response = webClient.build().get()
-                .uri("http://localhost:8088/api/v1/customers")
+                .uri("https://api-fintrack.kbaenak.tech/api/v1/customers")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<List<UserDtoClient>>>() {})
                 .block();
