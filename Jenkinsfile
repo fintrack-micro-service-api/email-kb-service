@@ -132,41 +132,11 @@ pipeline {
             }
         }
 
-
-        // seiha-new-build-img 
-        // stage('Build Image') {
-        //     steps {
-        //         script {
-        //             try {
-        //                 def buildNumber = currentBuild.number
-        //                 def jarFile = './build/libs/email-kb-service-0.0.1-SNAPSHOT.jar' // Define the path to JAR file
-
-        //                 if (fileExists(jarFile)) {
-        //                     def imageTag = "${IMAGE_NAME}:${buildNumber}"
-        //                     sh "docker build -t ${DOCKER_REGISTRY}/${imageTag} -f /path/to/Dockerfile ." // Replace /path/to/Dockerfile with actual path
-
-        //                     withCredentials([usernamePassword(credentialsId: 'docker-hub-cred',
-        //                             passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        //                         sh "echo \$PASS | docker login -u \$USER --password-stdin"
-        //                         sh "docker push ${DOCKER_REGISTRY}/${imageTag}"
-        //                     }
-        //                 } else {
-        //                     error("JAR file not found at ${jarFile}.")
-        //                 }
-        //             } catch (Exception e) {
-        //                 currentBuild.result = 'FAILURE'
-        //                 sendTelegramMessage("❌ Build Image stage failed: ${e.message}\nVersion: ${BUILD_INFO}\nCommitter: ${COMMITTER}\nBranch: ${BRANCH}")
-        //                 error("Build Image stage failed: ${e.message}")
-        //             }
-        //         }
-        //     }
-        // }
-
         stage('Trigger ManifestUpdate') {
             steps {
                 script {
                     try {
-                        build job: 'email-service-pipeline-2', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+                        build job: 'email-kb-service-pipeline-2', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         sendTelegramMessage("❌ Trigger ManifestUpdate stage failed: ${e.message}\nVersion: ${BUILD_INFO}\nCommitter: ${COMMITTER}\nBranch: ${BRANCH}")
