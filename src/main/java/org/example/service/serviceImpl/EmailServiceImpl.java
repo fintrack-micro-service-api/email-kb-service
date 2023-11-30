@@ -9,12 +9,17 @@ import org.example.exception.NotFoundException;
 import org.example.model.Email;
 import org.example.model.Smtp;
 import org.example.model.SmtpDto;
+import org.example.model.request.EmailUser;
 import org.example.model.request.SmtpRequest;
 import org.example.repository.EmailKbServiceRepository;
+import org.example.repository.EmailServiceRepository;
 import org.example.service.EmailKbService;
 import org.example.service.MailSenderFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -25,19 +30,21 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 @Service
+
 public class EmailServiceImpl implements EmailKbService {
     private final MailSenderFactory mailSenderFactory;
     private final EmailKbServiceRepository emailKbServiceRepository;
     private final WebClient webClient;
+    private final EmailServiceRepository emailServiceRepository;
 
-    public EmailServiceImpl(MailSenderFactory mailSenderFactory, EmailKbServiceRepository emailKbServiceRepository,WebClient webClient) {
+    public EmailServiceImpl(MailSenderFactory mailSenderFactory, EmailKbServiceRepository emailKbServiceRepository, WebClient webClient, EmailServiceRepository emailServiceRepository) {
         this.mailSenderFactory = mailSenderFactory;
         this.emailKbServiceRepository = emailKbServiceRepository;
         this.webClient = webClient;
+        this.emailServiceRepository = emailServiceRepository;
     }
 
     @Value("${smtp.username}")
@@ -165,5 +172,11 @@ public class EmailServiceImpl implements EmailKbService {
         return smtpDtoList;
     }
 
+    @Override
+    public Page<EmailUser> getAllEmailReciver(int page, int size) {
+        Pageable pageable = PageRequest.of (page, size);
+        Page<EmailUser> emailUsers =  emailServiceRepository.findAll(pageable);
+        return emailUsers;
+    }
 
 }
