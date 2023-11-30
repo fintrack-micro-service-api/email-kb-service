@@ -23,6 +23,8 @@ public class ApiResponse<T> {
 
     private Integer status;
 
+    private Long total;
+
     public ApiResponse(String message, Integer status) {
         this.message = message;
         this.status = status;
